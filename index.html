@@ -3,14 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LoySoft - Services Numériques</title>
+  <title>LoySoft - Chargement</title>
   <style>
     * { margin:0; padding:0; box-sizing:border-box; font-family:'Arial',sans-serif; }
     body { overflow:hidden; }
-    a { text-decoration:none; color:inherit; }
-    img { max-width:100%; display:block; }
-
-    /* Loader overlay */
     #loader { position:fixed; top:0; left:0; width:100%; height:100%; background:#fff;
       display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:999;
     }
@@ -20,75 +16,9 @@
     #loader .progress-container { width:30%; height:6px; background:linear-gradient(to right, #eee 0%, #eee 100%); border-radius:3px; margin-top:15px; overflow:hidden; }
     #loader .progress-bar { height:100%; width:0; background:linear-gradient(90deg, #3498db, #2ecc71); }
     #loader .percent { margin-top:8px; font-size:0.9rem; color:#555; }
-
-    /* Main content */
-    #main { display:none; overflow:auto; }
-    nav { display:flex; align-items:center; justify-content:space-between; padding:10px 5vw; background:#f5f5f5;
-      box-shadow:0 2px 5px rgba(0,0,0,.1);
-    }
-    nav .brand { display:flex; align-items:center; }
-    nav .brand img { width:45px; height:45px; margin-right:8px; }
-    nav .brand h1 { font-size:1.4rem; color:#333; }
-    nav .slogan { font-size:0.9rem; font-style:italic; color:#666; }
-
-    .hero { display:flex; flex-wrap:wrap; justify-content:space-around; padding:30px 5vw; }
-    .hero .card { width:calc(33% - 20px); min-width:200px; margin:10px; text-align:center; }
-    .hero .card img { border-radius:8px; height:250px; object-fit:cover; }
-    .hero .card p { margin-top:8px; font-size:1rem; color:#444; }
-
-    .services { text-align:center; padding:30px 5vw; }
-    .services button {
-      padding:12px 25px; font-size:1rem;
-      background:#3498db; color:#fff; border:none; border-radius:25px; cursor:pointer; transition:background .3s;
-      animation: pulse 3s ease-in-out infinite;
-      transform-origin:center;
-    }
-    .services button:hover { background:#2980b9; }
-    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-
-    /* Drawer */
-    #drawer { position:fixed; bottom:-260px; left:0; width:100%; background:#fff;
-      box-shadow:0 -2px 5px rgba(0,0,0,.2); transition:bottom .3s; padding:15px 10vw;
-      display:flex; justify-content:space-around; flex-wrap:wrap; z-index:500;
-    }
-    #drawer.show { bottom:0; }
-    #drawer .option { flex:1 1 80px; text-align:center; margin:10px; cursor:pointer; }
-    #drawer .option img { width:50px; height:50px; }
-    #drawer .option p { margin-top:5px; font-size:0.9rem; color:#333; }
-
-    /* Modal */
-    #formModal { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.5);
-      display:none; align-items:center; justify-content:center; z-index:1000;
-    }
-    #formModal .modal-content { position:relative; background:#fff; padding:20px; border-radius:10px;
-      width:90%; max-width:380px;
-    }
-    #formModal .close-btn { position:absolute; top:12px; right:12px; font-size:1.4rem; color:#999; cursor:pointer; }
-    #formModal .modal-content img { width:70px; height:70px; margin:0 auto 10px auto; display:block; }
-    #formModal .modal-content h2 { text-align:center; margin:12px 0; font-size:1.2rem; }
-    #formModal .modal-content label { display:block; margin-top:10px; font-size:0.95rem; color:#333; }
-    #formModal .modal-content input[type="text"],
-    #formModal .modal-content select,
-    #formModal .modal-content textarea,
-    #formModal .modal-content input[type="file"] {
-      width:100%; padding:8px; margin-top:5px; border:1px solid #ddd; border-radius:5px; font-size:0.9rem;
-    }
-    #formModal .modal-content textarea { resize:vertical; height:90px; }
-    #formModal .modal-content button.submit { margin-top:15px; width:100%; padding:10px;
-      background:#27ae60; color:#fff; border:none; border-radius:20px; cursor:pointer; font-size:1rem;
-    }
-    #formModal .modal-content button.submit:hover { background:#1e8449; }
-
-    /* Payment options & messages */
-    .payment-options { display:flex; justify-content:space-around; margin-top:15px; }
-    .payment-options img { width:60px; cursor:pointer; border:2px solid transparent; border-radius:5px; }
-    .payment-options img.selected { border-color:#3498db; }
-    #paymentMsg { margin-top:10px; font-style:italic; color:#27ae60; text-align:center; display:none; }
-    #selectPaymentMsg { margin-top:10px; font-size:0.9rem; color:#e74c3c; text-align:center; display:none; }
-
-    /* Responsive */
-    @media(max-width:768px){ .hero .card{ width:calc(50% - 20px);} }
-    @media(max-width:480px){ .hero .card{ width:100%;} nav{flex-direction:column;align-items:flex-start;} }
+      /* Responsive */
+    @media(max-width:668px){ .hero .card{ width:calc(50% - 20px);} }
+    @media(max-width:380px){ .hero .card{ width:100%;} nav{flex-direction:row;align-items:center;} }
   </style>
 </head>
 <body>
@@ -100,85 +30,6 @@
       <div class="progress-bar"></div>
     </div>
     <div class="percent">0%</div>
-  </div>
-
-  <div id="main">
-    <nav>
-      <div class="brand">
-        <img src="/loysoft-site/LoySoft.png" alt="Logo LoySoft">
-        <h1>LoySoft</h1>
-      </div>
-      <div class="slogan">« Vos services numériques à la demande »</div>
-    </nav>
-
-    <section class="hero">
-      <div class="card">
-        <img src="/loysoft-site/bureautique.png" alt="Logo LoySoft">
-        <p>Faites rédiger vos documents professionnels de bureautique impeccable en cliquant sur le bouton 'UTILISER NOS SERVICES' puis choisissez l'option qui vous convient.</p>
-      </div>
-      <div class="card">
-        <img src="/loysoft-site/service logo.png" alt="Logo LoySoft">
-        <p>Commandez votre logo en toute fiabilité en cliquant sur le bouton 'UTILISER NOS SERVICES' puis choisissez l'option logo.</p>
-      </div>
-      <div class="card">
-        <img src="/loysoft-site/web.png" alt="Logo LoySoft">
-        <p>Faites concevoir votre application ou site web en cliquant sur le bouton 'UTILISER NOS SERVICES' puis choisissez l'option application ou site web.</p>
-      </div>
-    </section>
-
-    <section class="services">
-      <button id="useServiceBtn">UTILISER NOS SERVICES</button>
-    </section>
-  </div>
-
-  <div id="drawer">
-    <div class="option" data-service="word">
-      <img src="/loysoft-site/ko.jpg" alt="Word">
-      <p>Word</p>
-    </div>
-    <div class="option" data-service="excel">
-      <img src="/loysoft-site/EXCEL.jpg" alt="Excel">
-      <p>Excel</p>
-    </div>
-    <div class="option" data-service="ppt">
-      <img src="/loysoft-site/lo.jpg" alt="PowerPoint">
-      <p>PowerPoint</p>
-    </div>
-    <div class="option" data-service="logo">
-      <img src="/loysoft-site/LOGO.jpg" alt="Logo professionnel">
-      <p>Logo professionnel</p>
-    </div>
-    <div class="option" data-service="web">
-      <img src="/loysoft-site/APP.jpg" alt="Web">
-      <p>site Web + hebergement Github</p>
-    </div>
-  </div>
-
-  <div id="formModal">
-    <div class="modal-content">
-      <div class="close-btn" id="closeModal">&times;</div>
-      <img id="serviceImg" src="IMG/" alt="Service Image">
-      <h2 id="serviceTitle"></h2>
-      <form id="orderForm">
-        <label>Nom complet</label>
-        <input type="text" id="fullName" placeholder="Ex: Jean O'Kisala" pattern="[A-Za-z '\u00C0-\u017F]+" required>
-        <label>Frais du service (choisissez une option)</label>
-        <select id="serviceFee" required></select>
-        <label>Description</label>
-        <textarea id="description" maxlength="5000" required></textarea>
-
-        <!-- Payment options -->
-        <div class="payment-options">
-          <img src="/loysoft-site/orange.png" alt="Orange Money" data-payment="Orange Money">
-          <img src="/loysoft-site/M-pesa.png" alt="M-Pesa" data-payment="M-Pesa">
-          <img src="/loysoft-site/airtel.png" alt="Airtel Money" data-payment="Airtel Money">
-        </div>
-        <p id="paymentMsg">Le paiement s'effectuera après la livraison, nous vous faisons confiance.</p>
-        <p id="selectPaymentMsg">Veuillez choisir un mode de paiement.</p>
-
-        <button type="submit" class="submit">Valider la commande</button>
-      </form>
-    </div>
   </div>
 
   <script>
@@ -201,103 +52,8 @@
     }, slideStep);
     setTimeout(() => {
       clearInterval(pInt); clearInterval(sInt);
-      document.getElementById('loader').style.display = 'none';
-      document.body.style.overflow = 'auto';
-      document.getElementById('main').style.display = 'block';
+      window.location.href = 'accueil.html'; // Redirection vers index.html
     }, total);
-
-    // Drawer & outside click
-    const useBtn = document.getElementById('useServiceBtn'), drawer = document.getElementById('drawer');
-    useBtn.addEventListener('click', e => { drawer.classList.toggle('show'); e.stopPropagation(); });
-    document.addEventListener('click', e => {
-      if (drawer.classList.contains('show') && !drawer.contains(e.target) && e.target !== useBtn) {
-        drawer.classList.remove('show');
-      }
-    });
-
-    // Modal & form logic
-    const formModal = document.getElementById('formModal'), closeModal = document.getElementById('closeModal');
-    const serviceImg = document.getElementById('serviceImg'), serviceTitle = document.getElementById('serviceTitle');
-    const feeSelect = document.getElementById('serviceFee'), orderForm = document.getElementById('orderForm');
-    const paymentImgs = document.querySelectorAll('.payment-options img');
-    const paymentMsg = document.getElementById('paymentMsg');
-    const selectPaymentMsg = document.getElementById('selectPaymentMsg');
-    let selectedPayment = '';
-
-    const feesMap = {
-      word: [['standard','Standard (2H - 0.8$ / 2240FC) de 0 à 5 PAGES'],['standard','Standard (2H - 1.5$ / 4200FC) de 6 à 10 PAGES'],['standard','Standard (2H - 1.8$ / 5040FC) de 11 à 20 PAGES'],['express','Express (1H - 1.9$ / 5320FC) de 0 à 5 PAGES'],['express','Express (1H - 2.3$ / 6440FC) de 6 à 10 PAGES'],['express','Express (1H - 2.6$ / 7280FC) de 11 à 20 PAGES']],
-      excel: [['standard','Standard (2H - 1$ / 2800FC) de 0 à 5 PAGES'],['standard','Standard (2H - 1.8$ / 5040FC) de 6 à 10 PAGES'],['standard','Standard (2H - 2.2$ / 6160FC) de 11 à 20 PAGES'],['express','Express (1H - 2.4$ / 6720FC) de 0 à 5 PAGES'],['express','Express (1H - 2.6$ / 7840FC) de 6 à 10 PAGES'],['express','Express (1H - 2.9$ / 8120FC) de 11 à 20 PAGES']],
-      ppt: [['standard','Standard (2H - 1.2$ / 3360FC) de 0 à 5 PAGES'],['standard','Standard (2H - 2$ / 5600FC) de 6 à 10 PAGES'],['standard','Standard (2H - 2.3$ / 6440FC) de 11 à 20 PAGES'],['express','Express (1H - 2.6$ / 7280FC) de 0 à 5 PAGES'],['express','Express (1H - 2.9$ / 8120FC) de 6 à 10 PAGES'],['express','Express (1H - 3.2$ / 8960FC) de 11 à 20 PAGES']],
-      logo: [['standard','Standard (2H - 3.5$ / 9800FC)'],['express','Express (1H - 5.5$ / 15400FC)']],
-      web: [['standard','Standard (10 sem - 40$)'],['express','Express (6 sem - 80$)']]
-    };
-    const imgMap = { word:'ko.jpg', 
-                     excel:'EXCEL.jpg', 
-                     ppt:'lo.jpg', 
-                     logo:'LOGO.jpg', 
-                     web:'APP.jpg' 
-                   };
-
-    // Show modal on option click
-    document.querySelectorAll('#drawer .option').forEach(opt => {
-      opt.addEventListener('click', () => {
-        const svc = opt.dataset.service;
-        serviceImg.src = `IMG/${imgMap[svc]}`;
-        serviceImg.alt = svc;
-        serviceTitle.textContent = opt.querySelector('p').textContent;
-        feeSelect.innerHTML = '';
-        feesMap[svc].forEach(([val, text]) => {
-          feeSelect.innerHTML += `<option value="${val}">${text}</option>`;
-        });
-        drawer.classList.remove('show');
-        formModal.style.display = 'flex';
-      });
-    });
-
-    // Close modal & reset form
-    closeModal.addEventListener('click', () => {
-      formModal.style.display = 'none';
-      orderForm.reset();
-      selectedPayment = '';
-      paymentImgs.forEach(i => i.classList.remove('selected')); 
-      paymentMsg.style.display = 'none';
-      selectPaymentMsg.style.display = 'none';
-    });
-
-    // Payment selection logic
-    paymentImgs.forEach(img => {
-      img.addEventListener('click', () => {
-        paymentImgs.forEach(i => i.classList.remove('selected'));
-        img.classList.add('selected');
-        selectedPayment = img.dataset.payment;
-        paymentMsg.style.display = 'block';
-        selectPaymentMsg.style.display = 'none';
-      });
-    });
-
-    // Form submission
-    orderForm.addEventListener('submit', e => {
-      e.preventDefault();
-      if (!orderForm.checkValidity()) { orderForm.reportValidity(); return; }
-      if (!selectedPayment) {
-        selectPaymentMsg.style.display = 'block';
-        return;
-      }
-      // Build WhatsApp URL
-      const nameVal = encodeURIComponent(document.getElementById('fullName').value.trim());
-      const feeText = encodeURIComponent(feeSelect.options[feeSelect.selectedIndex].text);
-      const descVal = encodeURIComponent(document.getElementById('description').value.trim());
-      const svcText = encodeURIComponent(serviceTitle.textContent);
-      const payText = encodeURIComponent(selectedPayment);
-      const whatsappUrl =
-        `https://wa.me/243844224165?text=` +
-        `Nom%20complet%3A%20${nameVal}%0A` +
-        `Service%3A%20${svcText}%0A` +
-        `Frais%3A%20${feeText}%0A` +
-        `Description%3A%20${descVal}%0A` +
-        `Paiement%3A%20${payText}`;
-      window.open(whatsappUrl, '_blank');
-    });
   </script>
 </body>
 </html>
