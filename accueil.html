@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoySoft - Services Numériques</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Arial',sans-serif; }
+    body { overflow:auto; }
+    a { text-decoration:none; color:inherit; }
+    img { max-width:100%; display:block; }
+
+    /* Main content */
+    nav { display:flex; align-items:center; justify-content:space-between; padding:10px 5vw; background:#f5f5f5;
+      box-shadow:0 2px 5px rgba(0,0,0,.1);
+    }
+    nav .brand { display:flex; align-items:center; }
+    nav .brand img { width:45px; height:45px; margin-right:8px; }
+    nav .brand h1 { font-size:1.4rem; color:#333; }
+    .nav-btn { font-size:1.8rem; cursor:pointer; }
+
+    .hero { display:flex; flex-wrap:wrap; justify-content:space-around; padding:30px 5vw; }
+    .hero .card { width:calc(33% - 20px); min-width:200px; margin:10px; text-align:center; }
+    .hero .card img { border-radius:8px; height:250px; object-fit:cover; }
+    .hero .card p { margin-top:8px; font-size:1rem; color:#444; }
+    .hero .card button { 
+      margin-top:12px; 
+      padding:10px 20px; 
+      background:#3498db; 
+      color:#fff; 
+      border:none; 
+      border-radius:20px; 
+      cursor:pointer; 
+      transition: background .3s, transform .3s; 
+      animation: zoom 3s infinite; 
+    }
+    .hero .card button:hover { background:#2980b9; }
+    
+    @keyframes zoom {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    /* Slogan */
+    .slogan {
+      position: absolute;
+      top: 10px;
+      left: 0;
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: slide 15s linear infinite;
+    }
+    @keyframes slide {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+    .slogan span {
+      display: inline-block;
+      padding: 0 20px;
+      font-size: 1.2rem;
+      color: #3498db;
+    }
+
+    /* Service options drawer */
+    #drawer { position:fixed; bottom:-260px; left:0; width:100%; background:#fff;
+      box-shadow:0 -2px 5px rgba(0,0,0,.2); transition:bottom .3s; padding:15px 10vw;
+      display:flex; justify-content:space-around; flex-wrap:wrap; z-index:500;
+    }
+    #drawer.show { bottom:0; }
+    #drawer .option { flex:1 1 80px; text-align:center; margin:10px; cursor:pointer; }
+    #drawer .option img { width:50px; height:50px; }
+    #drawer .option p { margin-top:5px; font-size:0.9rem; color:#333; }
+
+    /* Navigation drawer */
+    #navDrawer { position:fixed; top:0; left:-250px; width:200px; height:100%; background:#fff;
+      box-shadow:2px 0 5px rgba(0,0,0,.2); transition:left .3s; padding-top:60px; z-index:600;
+    }
+    #navDrawer.show { left:0; }
+    #navDrawer a { display:block; padding:12px 20px; font-size:1rem; color:#333; }
+    #navDrawer a.active { background:#3498db; color:#fff; }
+
+    /* Modal */
+    #formModal { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.5);
+      display:none; align-items:center; justify-content:center; z-index:1000;
+    }
+    #formModal .modal-content { position:relative; background:#fff; padding:20px; border-radius:10px;
+      width:90%; max-width:380px;
+    }
+    #formModal .close-btn { position:absolute; top:12px; right:12px; font-size:1.4rem; color:#999; cursor:pointer; }
+    #formModal .modal-content img { width:70px; height:70px; margin:0 auto 10px auto; display:block; }
+    #formModal .modal-content h2 { text-align:center; margin:12px 0; font-size:0.89rem; }
+    #formModal .modal-content label { display:block; margin-top:10px; font-size:0.95rem; color:#333; }
+    #formModal .modal-content input[type="text"],
+    #formModal .modal-content select,
+    #formModal .modal-content textarea,
+    #formModal .modal-content input[type="file"] {
+      width:100%; padding:8px; margin-top:5px; border:1px solid hsl(0, 0%, 87%); border-radius:5px; font-size:0.9rem;
+    }
+    #formModal .modal-content textarea { resize:vertical; height:90px; }
+    #formModal .modal-content button.submit { margin-top:15px; width:100%; padding:10px;
+      background:#27ae60; color:#fff; border:none; border-radius:20px; cursor:pointer; font-size:1rem;
+    }
+    #formModal .modal-content button.submit:hover { background:#1e8449; }
+
+    /* Payment options & messages */
+    .payment-options { display:flex; justify-content:space-around; margin-top:15px; }
+    .payment-options img { width:60px; cursor:pointer; border:2px solid transparent; border-radius:5px; }
+    .payment-options img.selected { border-color:#3498db; }
+    #paymentMsg { margin-top:10px; font-style:italic; color:#27ae60; text-align:center; display:none; }
+    #selectPaymentMsg { margin-top:10px; font-size:0.9rem; color:#e74c3c; text-align:center; display:none; }
+
+    /* Responsive */
+    @media(max-width:668px){ .hero .card{ width:calc(50% - 20px);} }
+    @media(max-width:380px){ .hero .card{ width:100%;} nav{flex-direction:row;align-items:center;} }
+  </style>
+</head>
+<body>
+  <div id="main">
+    <nav>
+      <div class="brand">
+        <img src="/loysoft-site/LoySoft.png" alt="Logo LoySoft">
+        <h1>LoySoft</h1>
+      </div>
+      <span class="nav-btn" id="navBtn">☰</span>
+    </nav>
+
+    <!-- Slogan -->
+    <div class="slogan">
+      <span>Vos services numériques à la demande 🚀</span>
+    </div>
+
+    <!-- Navigation Drawer -->
+    <div id="navDrawer">
+      <a href="accueil.html" class="active">Accueil & Services</a>
+      <a href="about.html">À propos de LoySoft</a>
+      <a href="story.html">Historique</a>
+      <a href="contact.html">Contact</a>
+    </div>
+
+    <section class="hero">
+      <div class="card">
+        <img src="/loysoft-site/bureautique.png" alt="Services Bureautique">
+        <p>Faites rédiger vos documents professionnels de bureautique impeccable.</p>
+        <button class="useServiceBtn" data-group="word,excel,ppt">UTILISER CE SERVICE</button>
+      </div>
+      <div class="card">
+        <img src="/loysoft-site/service logo.png" alt="Création de Logo">
+        <p>Commandez votre logo en toute fiabilité.</p>
+        <button class="useServiceBtn" data-group="logo">UTILISER CE SERVICE</button>
+      </div>
+      <div class="card">
+        <img src="/loysoft-site/web.png" alt="Conception Site Web">
+        <p>Faites concevoir votre application ou site web.</p>
+        <button class="useServiceBtn" data-group="web">UTILISER CE SERVICE</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Service Options Drawer -->
+  <div id="drawer">
+    <div class="option" data-service="word">
+      <img src="/loysoft-site/ko.jpg" alt="Word"><p>Word</p>
+    </div>
+    <div class="option" data-service="excel">
+      <img src="/loysoft-site/EXCEL.jpg" alt="Excel"><p>Excel</p>
+    </div>
+    <div class="option" data-service="ppt">
+      <img src="/loysoft-site/lo.jpg" alt="PowerPoint"><p>PowerPoint</p>
+    </div>
+    <div class="option" data-service="logo">
+      <img src="/loysoft-site/LOGO.jpg" alt="Logo professionnel"><p>Logo professionnel</p>
+    </div>
+    <div class="option" data-service="web">
+      <img src="/loysoft-site/APP.jpg" alt="Web"><p>Site Web + hébergement Github avec moyen de contact whatsAap sans base des données ni méthode paiement en ligne </p>
+    </div>
+    <div class="option" data-service="web">
+      <img src="/loysoft-site/APP.jpg" alt="Web"><p>Site Web + hébergement Github avec base des données et méthode paiement en ligne orange money, airtel money et m-pesa</p>
+    </div>
+    <div class="option" data-service="web">
+      <img src="/loysoft-site/APP.jpg" alt="Web"><p>Site Web + hébergement Github avec un dommaine WWW nom_du_site.com avec base des données et méthode paiement en ligne orange money, airtel money et m-pesa </p>
+    </div>
+  </div>
+
+  <!-- Modal Form -->
+  <div id="formModal">
+    <div class="modal-content">
+      <div class="close-btn" id="closeModal">&times;</div>
+      <img id="serviceImg" src="IMG/" alt="Service Image">
+      <h2 id="serviceTitle"></h2>
+      <form id="orderForm">
+        <label>Nom complet</label>
+        <input type="text" id="fullName" placeholder="Ex: Jean O'Kisala" pattern="[A-Za-z '\u00C0-\u017F]+" required>
+        <label>Frais du service (choisissez une option)</label>
+        <select id="serviceFee" required></select>
+        <label>Description</label>
+        <textarea id="description" maxlength="5000" required></textarea>
+
+        <div class="payment-options">
+          <img src="/loysoft-site/orange.png" alt="Orange Money" data-payment="Orange Money">
+          <img src="/loysoft-site/M-pesa.png" alt="M-Pesa" data-payment="M-Pesa">
+          <img src="/loysoft-site/airtel.png" alt="Airtel Money" data-payment="Airtel Money">
+        </div>
+        <p id="paymentMsg">Le paiement s'effectuera après la livraison, nous vous faisons confiance.</p>
+        <p id="selectPaymentMsg">Veuillez choisir un mode de paiement.</p>
+
+        <button type="submit" class="submit">Valider la commande</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Service drawer logic
+    const drawer = document.getElementById('drawer');
+    document.querySelectorAll('.useServiceBtn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        const group = btn.dataset.group.split(',');
+        document.querySelectorAll('#drawer .option').forEach(opt => {
+          opt.style.display = group.includes(opt.dataset.service) ? 'flex' : 'none';
+        });
+        drawer.classList.toggle('show');
+        e.stopPropagation();
+      });
+    });
+    document.addEventListener('click', e => {
+      if (drawer.classList.contains('show') && !drawer.contains(e.target)) {
+        drawer.classList.remove('show');
+      }
+    });
+
+    // Navigation drawer logic
+    const navBtn = document.getElementById('navBtn');
+    const navDrawer = document.getElementById('navDrawer');
+    navBtn.addEventListener('click', e => {
+      navDrawer.classList.toggle('show');
+      e.stopPropagation();
+    });
+    document.addEventListener('click', e => {
+      if (navDrawer.classList.contains('show') && !navDrawer.contains(e.target) && e.target !== navBtn) {
+        navDrawer.classList.remove('show');
+      }
+    });
+
+    // Modal & form logic (unchanged)
+    const formModal = document.getElementById('formModal'), closeModal = document.getElementById('closeModal');
+    const serviceImg = document.getElementById('serviceImg'), serviceTitle = document.getElementById('serviceTitle');
+    const feeSelect = document.getElementById('serviceFee'), orderForm = document.getElementById('orderForm');
+    const paymentImgs = document.querySelectorAll('.payment-options img');
+    const paymentMsg = document.getElementById('paymentMsg');
+    const selectPaymentMsg = document.getElementById('selectPaymentMsg');
+    let selectedPayment = '';
+
+    const feesMap = {
+      word: [['standard','Standard (2H - 0.8$ / 2240FC) de 0 à 5 PAGES'],['standard','Standard (2H - 1.5$ / 4200FC) de 6 à 10 PAGES'],['standard','Standard (2H - 1.8$ / 5040FC) de 11 à 20 PAGES'],['express','Express (1H - 1.9$ / 5320FC) de 0 à 5 PAGES'],['express','Express (1H - 2.3$ / 6440FC) de 6 à 10 PAGES'],['express','Express (1H - 2.6$ / 7280FC) de 11 à 20 PAGES']],
+      excel: [['standard','Standard (2H - 1$ / 2800FC) de 0 à 5 PAGES'],['standard','Standard (2H - 1.8$ / 5040FC) de 6 à 10 PAGES'],['standard','Standard (2H - 2.2$ / 6160FC) de 11 à 20 PAGES'],['express','Express (1H - 2.4$ / 6720FC) de 0 à 5 PAGES'],['express','Express (1H - 2.6$ / 7840FC) de 6 à 10 PAGES'],['express','Express (1H - 2.9$ / 8120FC) de 11 à 20 PAGES']],
+      ppt: [['standard','Standard (2H - 1.2$ / 3360FC) de 0 à 5 PAGES'],['standard','Standard (2H - 2$ / 5600FC) de 6 à 10 PAGES'],['standard','Standard (2H - 2.3$ / 6440FC) de 11 à 20 PAGES'],['express','Express (1H - 2.6$ / 7280FC) de 0 à 5 PAGES'],['express','Express (1H - 2.9$ / 8120FC) de 6 à 10 PAGES'],['express','Express (1H - 3.2$ / 8960FC) de 11 à 20 PAGES']],
+      logo: [['standard','Standard (2H - 3.5$ / 9800FC)'],['express','Express (1H - 5.5$ / 15400FC)']],
+      web: [['standard','Standard (9 sem - 30$)'],['express','Express (5 sem - 45$)']],
+      web: [['standard','Standard (9 sem - 50$)'],['express','Express (5 sem - 65$)']],
+      web: [['standard','Standard (9 sem - 90$)'],['express','Express (5 sem - 115$)']]
+    };
+    const imgMap = { word:'ko.jpg', excel:'EXCEL.jpg', ppt:'lo.jpg', logo:'LOGO.jpg', web:'APP.jpg' };
+
+    document.querySelectorAll('#drawer .option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        const svc = opt.dataset.service;
+        serviceImg.src = `IMG/${imgMap[svc]}`;
+        serviceImg.alt = svc;
+        serviceTitle.textContent = opt.querySelector('p').textContent;
+        feeSelect.innerHTML = '';
+        feesMap[svc].forEach(([val, text]) => {
+          feeSelect.innerHTML += `<option value="${val}">${text}</option>`;
+        });
+        drawer.classList.remove('show');
+        formModal.style.display = 'flex';
+      });
+    });
+
+    closeModal.addEventListener('click', () => {
+      formModal.style.display = 'none';
+      orderForm.reset(); selectedPayment = '';
+      paymentImgs.forEach(i => i.classList.remove('selected'));
+      paymentMsg.style.display = 'none'; selectPaymentMsg.style.display = 'none';
+    });
+
+    paymentImgs.forEach(img => {
+      img.addEventListener('click', () => {
+        paymentImgs.forEach(i => i.classList.remove('selected'));
+        img.classList.add('selected'); selectedPayment = img.dataset.payment;
+        paymentMsg.style.display = 'block'; selectPaymentMsg.style.display = 'none';
+      });
+    });
+
+    orderForm.addEventListener('submit', e => {
+      e.preventDefault(); if (!orderForm.checkValidity()) { orderForm.reportValidity(); return; }
+      if (!selectedPayment) { selectPaymentMsg.style.display = 'block'; return; }
+      const nameVal = encodeURIComponent(document.getElementById('fullName').value.trim());
+      const feeText = encodeURIComponent(feeSelect.options[feeSelect.selectedIndex].text);
+      const descVal = encodeURIComponent(document.getElementById('description').value.trim());
+      const svcText = encodeURIComponent(serviceTitle.textContent);
+      const payText = encodeURIComponent(selectedPayment);
+      const whatsappUrl = `https://wa.me/243844224165?text=` +
+        `Nom%20complet%3A%20${nameVal}%0AService%3A%20${svcText}%0AFrais%3A%20${feeText}%0ADescription%3A%20${descVal}%0APaiement%3A%20${payText}`;
+      window.open(whatsappUrl, '_blank');
+    });
+  </script>
+</body>
+</html>

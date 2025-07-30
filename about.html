@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>À propos de LoySoft</title>
+  <style>
+    /* Reset & base */
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Arial',sans-serif; }
+    body { overflow-x:hidden; background:#fafafa; color:#333; line-height:1.5; }
+    img { display:block; max-width:100%; height:auto; }
+
+    /* NAVBAR */
+    nav {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:10px 5vw; background:#f5f5f5;
+      box-shadow:0 2px 5px rgba(0,0,0,.1);
+      position:relative; z-index:1000;
+    }
+    nav .brand { display:flex; align-items:center; }
+    nav .brand img { width:45px; height:45px; margin-right:8px; }
+    nav .brand h1 { font-size:1.4rem; color:#333; }
+    .nav-btn { font-size:1.8rem; cursor:pointer; user-select:none; }
+
+    /* Drawer */
+    #navDrawer {
+      position:fixed; top:0; left:-250px; width:200px; height:100%;
+      background:#fff; box-shadow:2px 0 5px rgba(0,0,0,.2);
+      transition:left .3s; padding-top:60px; z-index:900;
+    }
+    #navDrawer.show { left:0; }
+    #navDrawer a {
+      display:block; padding:12px 20px; font-size:1rem;
+      color:#333; text-decoration:none;
+    }
+    #navDrawer a.active { background:#3498db; color:#fff; }
+
+    /* Slogan défilant */
+    .slogan {
+      position:absolute; top:10px; left:0; width:100%;
+      white-space:nowrap; overflow:hidden;
+      animation:slide 15s linear infinite;
+      font-size:1.2rem; color:#3498db;
+    }
+    @keyframes slide {
+      0% { transform:translateX(100%); }
+      100% { transform:translateX(-100%); }
+    }
+
+    /* Contenu About */
+    .about-container {
+      padding: 80px 5vw 40px;
+      max-width:800px; margin:0 auto;
+      text-align:center;
+    }
+    .about-container img.about-img {
+      width:200px; max-width:80%; margin:0 auto 20px;
+      border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,.1);
+    }
+    .about-container h2 {
+      font-size:2rem; margin-bottom:12px; color:#3498db;
+    }
+    .about-container p {
+      margin-bottom:24px;
+    }
+
+    /* Services */
+    .services {
+      text-align:left; margin-bottom:40px;
+    }
+    .services h3 {
+      font-size:1.5rem; margin-bottom:12px; color:#333;
+    }
+    .services ul {
+      list-style:none;
+    }
+    .services li {
+      display:flex; align-items:center;
+      margin-bottom:10px;
+    }
+    .services li img {
+      width:36px; height:auto; margin-right:10px;
+    }
+
+    /* Méthodes de paiement */
+    .paiement {
+      margin-bottom:40px;
+      text-align:left;
+    }
+    .paiement h3 {
+      font-size:1.5rem; margin-bottom:12px; color:#333;
+    }
+    .paiement ul {
+      list-style:none; display:flex; gap:20px; flex-wrap:wrap;
+    }
+    .paiement li {
+      display:flex; align-items:center;
+    }
+    .paiement li img {
+      width:40px; height:auto; margin-right:8px;
+    }
+
+    /* Bouton animé */
+    .zoom-btn {
+      display:inline-block; margin:0 auto 60px;
+      padding:12px 24px; font-size:1.1rem;
+      background:#3498db; color:white; border:none; border-radius:6px;
+      cursor:pointer; text-decoration:none;
+      animation:zoom 1.5s ease-in-out infinite;
+    }
+    @keyframes zoom {
+      0%   { transform:scale(1); }
+      50%  { transform:scale(1.05); }
+      100% { transform:scale(1); }
+    }
+
+    /* Responsive */
+    @media(max-width:668px) {
+      .services li img, .paiement li img { width:30px; }
+      .about-container { padding-top:100px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav>
+    <div class="brand">
+      <img src="/loysoft-site/LoySoft.png" alt="Logo LoySoft">
+      <h1>LoySoft</h1>
+    </div>
+    <span class="nav-btn" id="navBtn">☰</span>
+    <div class="slogan">Vos services numériques à la demande 🚀</div>
+  </nav>
+
+  <!-- Drawer -->
+  <div id="navDrawer">
+    <a href="accueil.html">Accueil & Services</a>
+    <a href="about.html" class="active">À propos de LoySoft</a>
+    <a href="story.html">Historique</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- About Content -->
+  <div class="about-container">
+    <img src="/loysoft-site/apropos.png" alt="À propos de LoySoft" class="about-img">
+    <h2>Bienvenue chez LoySoft !</h2>
+    <p>
+      LoySoft est une entreprise privée située à Kinshasa (RDC) spécialisée dans les prestations de services numériques sur mesure.
+    </p>
+
+    <div class="services">
+      <h3>SERVICES LOYSOFT</h3>
+
+      <h4>1. Service de bureautique</h4>
+      <ul>
+        <li>
+          <img src="/loysoft-site/off.jpg" alt="Word">
+          Rédaction de documents Word, Excel et PowerPoint professionnels et rapides en ligne
+        </li>
+      </ul>
+
+      <h4>2. Création de logos professionnels</h4>
+      <ul>
+        <li>
+          <img src="/loysoft-site/log1.png" alt="Création de logo">
+          Conception de logos uniques et adaptés à votre identité
+        </li>
+      </ul>
+
+      <h4>3. Création de sites web sur commande</h4>
+      <ul>
+        <li>
+          <img src="/loysoft-site/web3.jpg" alt="Site web basique">
+          Site Web + hébergement GitHub + contact WhatsApp (sans base de données ni paiement en ligne)
+        </li>
+        <li>
+          <img src="/loysoft-site/web2.png" alt="Site web avancé">
+          Site Web + hébergement GitHub + base de données + paiement Orange Money, Airtel Money, M-Pesa
+        </li>
+        <li>
+          <img src="/loysoft-site/web1." alt="Site avec nom de domaine">
+          Site Web + hébergement GitHub + domaine personnalisé (www.nom_du_site.com) + base de données et paiements mobiles
+        </li>
+      </ul>
+    </div>
+
+    <div class="paiement">
+      <h3>MÉTHODE DE PAIEMENT</h3>
+      <p>Les paiements s'effectuent après la prestation du service.</p>
+      <ul>
+        <li>
+          <img src="/loysoft-site/orange.png" alt="Orange Money">
+          Orange Money
+        </li>
+        <li>
+          <img src="/loysoft-site/M-Pesa.png" alt="M‑Pesa">
+          M‑Pesa
+        </li>
+        <li>
+          <img src="/loysoft-site/airtel.png" alt="Airtel Money">
+          Airtel Money
+        </li>
+      </ul>
+    </div>
+
+    <!-- Bouton animé -->
+    <a href="accueil.html" class="zoom-btn">UTILISER NOS SERVICES MAINTENANT</a>
+  </div>
+
+  <!-- JS navigation drawer -->
+  <script>
+    const navBtn = document.getElementById('navBtn');
+    const navDrawer = document.getElementById('navDrawer');
+    navBtn.addEventListener('click', e => {
+      navDrawer.classList.toggle('show');
+      e.stopPropagation();
+    });
+    document.addEventListener('click', e => {
+      if (navDrawer.classList.contains('show')
+          && !navDrawer.contains(e.target)
+          && e.target !== navBtn) {
+        navDrawer.classList.remove('show');
+      }
+    });
+  </script>
+</body>
+</html>
