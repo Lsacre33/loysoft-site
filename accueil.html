@@ -62,13 +62,24 @@
       color: #3498db;
     }
 
-    /* Service options drawer */
-    #drawer { position:fixed; bottom:-260px; left:0; width:100%; background:#fff;
-      box-shadow:0 -2px 5px rgba(0,0,0,.2); transition:bottom .3s; padding:15px 10vw;
-      display:flex; justify-content:space-around; flex-wrap:wrap; z-index:500;
+    /* Service options drawer: sliding from bottom */
+    #drawer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #fff;
+      box-shadow: 0 -2px 5px rgba(0,0,0,.2);
+      transform: translateY(100%);
+      transition: transform .3s ease-in-out;
+      padding:15px 10vw;
+      display:flex;
+      justify-content:space-around;
+      flex-wrap:wrap;
+      z-index:500;
     }
-    #drawer.show { bottom:0; }
-    #drawer .option { flex:1 1 80px; text-align:center; margin:10px; cursor:pointer; }
+    #drawer.show { transform: translateY(0); }
+    #drawer .option { flex:1 1 80px; text-align:center; margin:10px; cursor:pointer; display:flex; flex-direction:column; align-items:center; }
     #drawer .option img { width:50px; height:50px; }
     #drawer .option p { margin-top:5px; font-size:0.9rem; color:#333; }
 
@@ -152,7 +163,7 @@
       <div class="card">
         <img src="/loysoft-site/web.png" alt="Conception Site Web">
         <p>Faites concevoir votre application ou site web.</p>
-        <button class="useServiceBtn" data-group="web">UTILISER CE SERVICE</button>
+        <button class="useServiceBtn" data-group="web1,web2,web3">UTILISER CE SERVICE</button>
       </div>
     </section>
   </div>
@@ -167,18 +178,18 @@
     </div>
     <div class="option" data-service="ppt">
       <img src="/loysoft-site/lo.jpg" alt="PowerPoint"><p>PowerPoint</p>
-    </div>
+    </div>    
     <div class="option" data-service="logo">
       <img src="/loysoft-site/LOGO.jpg" alt="Logo professionnel"><p>Logo professionnel</p>
+    </div>    
+    <div class="option" data-service="web1">
+      <img src="/loysoft-site/APP.jpg" alt="Web"><p> Site Web + hébergement GitHub + contact WhatsApp (sans base de données ni paiement en ligne)</p>
     </div>
-    <div class="option" data-service="web">
-      <img src="/loysoft-site/APP.jpg" alt="Web"><p>Site Web + hébergement Github avec moyen de contact whatsAap sans base des données ni méthode paiement en ligne </p>
+    <div class="option" data-service="web2">
+      <img src="/loysoft-site/APP.jpg" alt="Web"><p>Site Web + hébergement GitHub + base de données + paiement Orange Money, Airtel Money, M-Pesa</p>
     </div>
-    <div class="option" data-service="web">
-      <img src="/loysoft-site/APP.jpg" alt="Web"><p>Site Web + hébergement Github avec base des données et méthode paiement en ligne orange money, airtel money et m-pesa</p>
-    </div>
-    <div class="option" data-service="web">
-      <img src="/loysoft-site/APP.jpg" alt="Web"><p>Site Web + hébergement Github avec un dommaine WWW nom_du_site.com avec base des données et méthode paiement en ligne orange money, airtel money et m-pesa </p>
+    <div class="option" data-service="web3">
+      <img src="/loysoft-site/APP.jpg" alt="Web"><p>Site Web + hébergement GitHub + domaine personnalisé (www.nom_du_site.com) + base de données et paiements mobiles</p>
     </div>
   </div>
 
@@ -241,7 +252,7 @@
       }
     });
 
-    // Modal & form logic (unchanged)
+    // Modal & form logic
     const formModal = document.getElementById('formModal'), closeModal = document.getElementById('closeModal');
     const serviceImg = document.getElementById('serviceImg'), serviceTitle = document.getElementById('serviceTitle');
     const feeSelect = document.getElementById('serviceFee'), orderForm = document.getElementById('orderForm');
@@ -255,21 +266,21 @@
       excel: [['standard','Standard (2H - 1$ / 2800FC) de 0 à 5 PAGES'],['standard','Standard (2H - 1.8$ / 5040FC) de 6 à 10 PAGES'],['standard','Standard (2H - 2.2$ / 6160FC) de 11 à 20 PAGES'],['express','Express (1H - 2.4$ / 6720FC) de 0 à 5 PAGES'],['express','Express (1H - 2.6$ / 7840FC) de 6 à 10 PAGES'],['express','Express (1H - 2.9$ / 8120FC) de 11 à 20 PAGES']],
       ppt: [['standard','Standard (2H - 1.2$ / 3360FC) de 0 à 5 PAGES'],['standard','Standard (2H - 2$ / 5600FC) de 6 à 10 PAGES'],['standard','Standard (2H - 2.3$ / 6440FC) de 11 à 20 PAGES'],['express','Express (1H - 2.6$ / 7280FC) de 0 à 5 PAGES'],['express','Express (1H - 2.9$ / 8120FC) de 6 à 10 PAGES'],['express','Express (1H - 3.2$ / 8960FC) de 11 à 20 PAGES']],
       logo: [['standard','Standard (2H - 3.5$ / 9800FC)'],['express','Express (1H - 5.5$ / 15400FC)']],
-      web: [['standard','Standard (9 sem - 30$)'],['express','Express (5 sem - 45$)']],
-      web: [['standard','Standard (9 sem - 50$)'],['express','Express (5 sem - 65$)']],
-      web: [['standard','Standard (9 sem - 90$)'],['express','Express (5 sem - 115$)']]
+      web1: [['standard','Standard (9 sem - 30$)'],['express','Express (5 sem - 45$)']],
+      web2: [['standard','Standard (9 sem - 50$)'],['express','Express (5 sem - 65$)']],
+      web3: [['standard','Standard (9 sem - 90$)'],['express','Express (5 sem - 115$)']],
     };
     const imgMap = { word:'ko.jpg', excel:'EXCEL.jpg', ppt:'lo.jpg', logo:'LOGO.jpg', web:'APP.jpg' };
 
     document.querySelectorAll('#drawer .option').forEach(opt => {
       opt.addEventListener('click', () => {
         const svc = opt.dataset.service;
-        serviceImg.src = `IMG/${imgMap[svc]}`;
+        serviceImg.src = `/loysoft-site/${imgMap[svc]}`;
         serviceImg.alt = svc;
         serviceTitle.textContent = opt.querySelector('p').textContent;
         feeSelect.innerHTML = '';
         feesMap[svc].forEach(([val, text]) => {
-          feeSelect.innerHTML += `<option value="${val}">${text}</option>`;
+          feeSelect.innerHTML += `<option value=\"${val}\">${text}</option>`;
         });
         drawer.classList.remove('show');
         formModal.style.display = 'flex';
